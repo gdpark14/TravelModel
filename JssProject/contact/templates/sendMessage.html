@@ -1,0 +1,10 @@
+{{user_name}}님에게 쪽지를 보냅니다!!
+
+ <form method="POST">
+ {% csrf_token %}
+ {{ form.as_p }}
+ {{ form.errors }}
+ {{ form.non_field_errors }}
+ <br />
+ <input type="submit" value="send" />
+ </form>

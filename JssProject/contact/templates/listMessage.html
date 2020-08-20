@@ -1,0 +1,38 @@
+<a href="{% url 'index' %}"><button>홈으로</button></a>
+내 쪽지함 
+
+<br>
+<br>
+    New Messages: 
+
+    {% for new in rlist %}
+
+        {% if not new.isRead %}
+            <a href="{% url 'viewMessage' new.id %}">
+            보낸 이: {{ new.sender }} &nbsp;
+            내용: {{ new.content }} 
+            </a>
+            <br>
+        {% endif %}
+    {% endfor %}
+
+    <br>
+
+    Read Messages: 
+
+    {% for new in rlist %}
+        {% if new.isRead %}
+        보낸 이: {{ new.sender }} &nbsp;
+        내용: {{ new.content }}
+        <br>
+        {% endif %}
+    {% endfor %}
+
+    <br>
+
+    Send Messages: 
+        {% for send in slist %}
+        받은 사람: {{ send.recipient }} &nbsp;
+        내용: {{ send.content }}
+        <br>
+    {% endfor %}

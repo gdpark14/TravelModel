@@ -2,6 +2,9 @@
 <a href="{% url 'sendMessage' my_jss.author %}">
     <button>쪽지보내기</button>
 </a>
+<a href="{% url 'profile_view' my_jss.author %}">
+    <button>{{my_jss.author}}</button>
+</a>
 
 <br>
 <br>
@@ -9,17 +12,19 @@
 {{my_jss.id}}번째 글입니다.
 
 <br>
-
+<a href="{% url 'location' my_jss.title %}">
 제목 : {{my_jss.title}}
+</a>
 
+<br>
 <br>
 
 내용 : {{my_jss.content}}
 
 <br>
-<br>
 
-<a href="{% url 'location' my_jss.location %}">
+
+
 위치 : {{my_jss.location}}
 </a>
 

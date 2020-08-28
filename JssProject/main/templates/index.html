@@ -12,7 +12,9 @@
 <body>
 
     {% if user.is_authenticated %}
+    <a href="{% url 'append_revise' %}">
     안녕하세요! {{user}}님!
+    </a>
     <a href="{% url 'listMessage' %}">
         <button>쪽지함</button>
     </a>

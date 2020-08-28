@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'accounts',
     'contact',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,4 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL='/'
+AUTH_USER_MODEL='auth.User'

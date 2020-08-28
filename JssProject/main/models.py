@@ -9,9 +9,20 @@ class Jasosel(models.Model):
     update_at=models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='like_posts')
-    location = models.CharField(max_length=50)
+    si=[('Seoul','Seoul'),
+        ('Daegu','Daegu'),
+        ('Busan','Busan')]
+    gu=[('GangnamGu','GangnamGu'),('MapoGu','MapoGu'),('BukGu','BukGu'),('SuseongGu','SuseongGu')]
+    location_si = models.CharField(max_length=50,choices=si,default='Seoul')
+    location_gu = models.CharField(max_length=50,choices=gu)
 
 class Comment(models.Model):
     content = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     jasosel = models.ForeignKey(Jasosel, on_delete=models.CASCADE)
+
+class Location(models.Model):
+    location_name = models.CharField(max_length=50)
+    sigungu = models.CharField(max_length=50)
+    telephone=models.CharField(max_length=50)
+    hashtag=models.CharField(max_length=150)

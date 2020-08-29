@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .forms import JssForm, CommentForm
-from .models import Jasosel, Comment
+from .models import Jasosel, Comment,City,Location
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
@@ -40,7 +40,9 @@ def detail(request, jss_id):
     my_jss=get_object_or_404(Jasosel,pk=jss_id)
     comment_form=CommentForm()
 
-    return render(request, 'detail.html',{'my_jss':my_jss,'comment_form':comment_form})
+    tourist_location=Location.objects.filter(Q(sigungu__icontains=my_jss.country)&Q(sigungu__icontains=my_jss.city))
+
+    return render(request, 'detail.html',{'my_jss':my_jss,'comment_form':comment_form,'tourist_location':tourist_location})
 
 def delete(request, jss_id):
     my_jss=Jasosel.objects.get(pk=jss_id)
@@ -101,3 +103,9 @@ def like(request,jss_id):
 
 def location(request,location_name):
     return render(request,'location.html',{'location':location_name})
+
+
+def load_cities(request):
+    country_id = request.GET.get('country')
+    cities = City.objects.filter(country_id=country_id).order_by('name')
+    return render(request, 'city_dropdown_list_options.html', {'cities': cities})

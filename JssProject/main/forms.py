@@ -1,18 +1,17 @@
 from django import forms
-from .models import Jasosel, Comment
+from .models import Jasosel, Comment,City
 
 class JssForm(forms.ModelForm):
 
     class Meta:
         model=Jasosel
-        fields=('title','location_si','location_gu','content')
+        fields=('title','country','city','content')
     
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['title'].label="제목"
         self.fields['content'].label="자기소개서 내용"
-        self.fields['location_si'].label="시"
-        self.fields['location_gu'].label="구"
+
         
         self.fields['title'].widget.attrs.update({
             'class':'jss_title',
@@ -22,18 +21,16 @@ class JssForm(forms.ModelForm):
             'class':'jss_content',
             'placeholder': '본문',
         })
-        self.fields['location_si'].widget.attrs.update({
-            'class':'jss_location',
-            'placeholder': '시',
-        })
-        self.fields['location_gu'].widget.attrs.update({
-            'class':'jss_location_gu',
-            'placeholder': '구',
-        })
-        if self.fields['location_si']=='Seoul':
-            location_gu=forms.ChoiceField(chocies=[('GangnamGu','GangnamGu'),('MapoGu','MapoGu')])
-        if self.fields['location_si']=='Daegu':
-            location_gu=forms.ChocieField(chocies=[('BukGu','BukGu'),('SuseongGu','SuseongGu')])
+        self.fields['city'].queryset=City.objects.none()
+
+        if 'country' in self.data:
+            try:
+                country_id=int(self.data.get('country'))
+                self.fields['city'].queryset=City.objects.filter(country_id=country_id)
+            except:
+                pass
+
+
 
 class CommentForm(forms.ModelForm):
 
